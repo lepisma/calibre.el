@@ -52,12 +52,11 @@
   "Preference order for book formats"
   :group 'calibre)
 
+(defcustom calibre-open-fn (lambda (ext) (if (string-equal "mobi" ext) "xdg-open" "okular"))
+  "Function that takes an extension and provides command to open that")
+
 (defun calibre-get-db-path ()
   (or calibre-db (f-join calibre-root "metadata.db")))
-
-(defun calibre-get-opener (extension)
-  "Return command for working with extension"
-  (if (string-equal "mobi" extension) "xdg-open" "okular"))
 
 (defun calibre-get-sql-stmt (query)
   "Return sql statement for the given query."
@@ -85,7 +84,7 @@
   (if ext-list
       (let ((file-path (calibre-get-book-extension book-path (car ext-list))))
         (if file-path
-            (let ((calibre-opener (calibre-get-opener (car ext-list))))
+            (let ((calibre-opener (funcall calibre-open-fn (car ext-list))))
               (start-process calibre-opener nil calibre-opener file-path))
           (calibre-open-preferred-format book-path (cdr ext-list))))
     (message "No suitable book format found.")))
