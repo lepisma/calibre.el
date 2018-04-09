@@ -1,0 +1,3 @@
+#+TITLE: calibre.el
+
+Open calibre books from Emacs.
