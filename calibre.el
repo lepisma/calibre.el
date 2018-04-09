@@ -4,7 +4,7 @@
 
 ;; Author: Abhinav Tushar <lepisma@fastmail.com>
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "25"))
+;; Package-Requires: ((emacs "25") (dash "2.13.0") (dash-functional "2.13.0") (f "0.20.0") (s "1.12.0") (helm "2.9.2"))
 ;; URL: https://github.com/lepisma/calibre.el
 
 ;;; Commentary:
@@ -35,11 +35,17 @@
 (require 'dash)
 (require 'dash-functional)
 
+(defgroup calibre nil
+  "Calibre")
+
 (defcustom calibre-root nil
-  "Path to calibre root directory")
+  "Path to calibre root directory"
+  :type 'directory
+  :group 'calibre)
 
 (defcustom calibre-ext-preference '("pdf" "cbr" "cbz" "djvu" "epub" "azw3" "mobi")
-  "Preference order for book formats")
+  "Preference order for book formats"
+  :group 'calibre)
 
 (defun calibre-get-opener (extension)
   "Return command for working with extension"
