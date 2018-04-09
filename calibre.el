@@ -43,9 +43,17 @@
   :type 'directory
   :group 'calibre)
 
+(defcustom calibre-db nil
+  "Path to calibre database. Defaults to calibre-root/metadata.db"
+  :type '(file :must-match t)
+  :group 'calibre)
+
 (defcustom calibre-ext-preference '("pdf" "cbr" "cbz" "djvu" "epub" "azw3" "mobi")
   "Preference order for book formats"
   :group 'calibre)
+
+(defun calibre-get-db-path ()
+  (or calibre-db (f-join calibre-root "metadata.db")))
 
 (defun calibre-get-opener (extension)
   "Return command for working with extension"
@@ -58,7 +66,7 @@
 
 (defun calibre-search-in-calibre (query)
   "Search for items in calibre library."
-  (let* ((calibre-db (f-join calibre-root "metadata.db"))
+  (let* ((calibre-db (calibre-get-db-path))
          (search-result (->> (shell-command-to-string (format "sqlite3 %s %s"
                                                             (shell-quote-argument calibre-db)
                                                             (shell-quote-argument (calibre-get-sql-stmt query))))
