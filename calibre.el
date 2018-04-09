@@ -53,7 +53,8 @@
   :group 'calibre)
 
 (defcustom calibre-open-fn (lambda (ext) (if (string-equal "mobi" ext) "xdg-open" "okular"))
-  "Function that takes an extension and provides command to open that")
+  "Function that takes an extension and provides command to open that"
+  :group 'calibre)
 
 (defun calibre-get-db-path ()
   (or calibre-db (f-join calibre-root "metadata.db")))
