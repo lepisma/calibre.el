@@ -62,7 +62,8 @@
 (defun calibre-get-sql-stmt (query)
   "Return sql statement for the given query."
   (s-concat "SELECT title, author_sort, path FROM books "
-            (format "WHERE lower(title || ' ' || author_sort) like '%%' || lower('%s') || '%%'" query)))
+            (format "WHERE lower(title || ' ' || author_sort) like '%%' || lower('%s') || '%%' " query)
+            "ORDER BY timestamp DESC"))
 
 (defun calibre-search-in-calibre (query)
   "Search for items in calibre library."
